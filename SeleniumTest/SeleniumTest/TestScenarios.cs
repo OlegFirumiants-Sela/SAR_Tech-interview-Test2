@@ -21,22 +21,21 @@ namespace SeleniumTest
                 _wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 _wd.Navigate().GoToUrl(_url);
 
+                var firstName = Helper.GetFirstNameRandomly();
+                var lastName = Helper.GetLastNameRandomly();
+                var email = $"{firstName}.{lastName}@fakeserver.com";
+                var expectedXpath = "//div[contains(@class, 'breadcrumb')]/span[text()='My account']";
+
+                FirstPage();
+
+                SecondPage(email);
+
+                ThirdPage(firstName, lastName, email);
+
                 try
                 {
-                    var firstName = Helper.GetFirstNameRandomly();
-                    var lastName = Helper.GetLastNameRandomly();
-                    var email = $"{firstName}.{lastName}@fakeserver.com";
-                    var expectedXpath = "//div[contains(@class, 'breadcrumb')]/span[text()='My account']";
-
-                    FirstPage();
-
-                    SecondPage(email);
-
-                    ThirdPage(firstName, lastName, email);
-
                     IWebElement finalValidation = _wd.FindElement(By.XPath(expectedXpath));
                     Assert.IsNotNull(finalValidation);
-
                 }
                 catch (NoSuchElementException e)
                 {
@@ -56,15 +55,15 @@ namespace SeleniumTest
                 _wd.Manage().Window.Maximize();
                 _wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
                 _wd.Navigate().GoToUrl(_url);
+
+                FirstPage();
+
+                SecondPage(email);
+
                 try
                 {
-                    FirstPage();
-
-                    SecondPage(email);
-
                     IWebElement finalValidation = _wd.FindElement(By.XPath(expectedXpath));
                     Assert.IsNotNull(finalValidation);
-
                 }
                 catch (NoSuchElementException e)
                 {
@@ -92,7 +91,7 @@ namespace SeleniumTest
             FindElementByIdAndFillInput("email_create", email);
             // click on button
             FindElementByIdAndClick("SubmitCreate");
-            
+
         }
 
         /// <summary>
