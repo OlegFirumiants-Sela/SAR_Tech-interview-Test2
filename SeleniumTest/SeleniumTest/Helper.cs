@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SeleniumTest
 {
     public static class Helper
     {
+        // target url for automation test
         public static string URL = @"http://automationpractice.com/index.php";
-        public static string CHROMEDRIVERPATH = "../../../";
-
+        // path for the location of the chrome driver, if necessary download and copy chromedriver.exe 
+        // to the folder of the project (...\SAR_Tech-interview-Test2\SeleniumTest\SeleniumTest)
+        public static string CHROMEDRIVERPATH = "../../../"; 
         static List<string> firstNameList = new List<string>
         {
             "Abraham", "Abbey", "Alon", "Anat",
@@ -60,11 +61,19 @@ namespace SeleniumTest
         };
         static Random rnd = new Random();
 
+        /// <summary>
+        /// gets first name randomly from list of first names.
+        /// </summary>
+        /// <returns>string first name</returns>
         public static string GetFirstNameRandomly()
         {
             return firstNameList[rnd.Next(firstNameList.Count)];
         }
 
+        /// <summary>
+        /// gets last name randomly from list of last names.
+        /// </summary>
+        /// <returns>string last name</returns>
         public static string GetLastNameRandomly()
         {
             return lastNameList[rnd.Next(lastNameList.Count)];

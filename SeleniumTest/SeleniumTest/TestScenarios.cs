@@ -1,10 +1,7 @@
 using System;
-using System.IO;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace SeleniumTest
 {
@@ -76,20 +73,34 @@ namespace SeleniumTest
             }
         }
 
+        /// <summary>
+        /// finds the login button and presses it to redirect to login or register page
+        /// </summary>
         private void FirstPage()
         {
+            // click the login button
             FindElementByClassAndClick("login");
         }
 
+        /// <summary>
+        /// fills the email field and submits to redirect to create new account form.
+        /// </summary>
+        /// <param name="email">email</param>
         private void SecondPage(string email)
         {
             // fill valid email address
             FindElementByIdAndFillInput("email_create", email);
             // click on button
             FindElementByIdAndClick("SubmitCreate");
-
+            
         }
 
+        /// <summary>
+        /// fills the form and submits it to create new account.
+        /// </summary>
+        /// <param name="firstName">first name</param>
+        /// <param name="lastName">last name</param>
+        /// <param name="email">email</param>
         private void ThirdPage(string firstName, string lastName, string email)
         {
 
@@ -131,6 +142,11 @@ namespace SeleniumTest
             FindElementByIdAndClick("submitAccount");
         }
 
+        /// <summary>
+        /// finds the element by class and clicks it.
+        /// </summary>
+        /// <param name="elementId">elementId</param>
+        /// <returns></returns>
         private IWebElement FindElementByClassAndClick(string elementId)
         {
             IWebElement element = _wd.FindElement(By.ClassName(elementId));
@@ -138,6 +154,11 @@ namespace SeleniumTest
             return element;
         }
 
+        /// <summary>
+        /// finds the element by id and clicks it.
+        /// </summary>
+        /// <param name="elementId">elementId</param>
+        /// <returns></returns>
         private IWebElement FindElementByIdAndClick(string elementId)
         {
             IWebElement element = _wd.FindElement(By.Id(elementId));
@@ -145,6 +166,12 @@ namespace SeleniumTest
             return element;
         }
 
+        /// <summary>
+        /// selects the dates from comboboxes (select options) with the details passed.
+        /// </summary>
+        /// <param name="day">day, number as string</param>
+        /// <param name="month">month, full name</param>
+        /// <param name="year">year, number as string</param>
         private void SelectFullDate(string day, string month, string year)
         {
             FindElementByIdAndSelectComboboxValue("days", day);
@@ -152,6 +179,12 @@ namespace SeleniumTest
             FindElementByIdAndSelectComboboxValue("years", year);
         }
 
+        /// <summary>
+        /// finds the element by id and fills the input value to it.
+        /// </summary>
+        /// <param name="elementId">elementId</param>
+        /// <param name="input">input value</param>
+        /// <returns></returns>
         private IWebElement FindElementByIdAndFillInput(string elementId, string input)
         {
             IWebElement element = _wd.FindElement(By.Id(elementId));
@@ -159,6 +192,12 @@ namespace SeleniumTest
             return element;
         }
 
+        /// <summary>
+        /// finds the element by id and selects the option with the input value.
+        /// </summary>
+        /// <param name="elementId">elementId</param>
+        /// <param name="input">input value</param>
+        /// <returns></returns>
         private IWebElement FindElementByIdAndSelectComboboxValue(string elementId, string input)
         {
             IWebElement element = _wd.FindElement(By.Id(elementId));
@@ -167,12 +206,24 @@ namespace SeleniumTest
             return element;
         }
 
+        /// <summary>
+        /// finds the element by id and checks if its value equals to the value passed as input.
+        /// </summary>
+        /// <param name="elementId">elementId</param>
+        /// <param name="input">input value</param>
+        /// <returns></returns>
         private bool FindElementByIdAndCheckIfValueEqualsToInput(string elementId, string input)
         {
             IWebElement element = _wd.FindElement(By.Id(elementId));
             return input == element.GetAttribute("value");
         }
 
+        /// <summary>
+        /// creates custom error message when called after exception caught.
+        /// </summary>
+        /// <param name="exceptionName">exception name</param>
+        /// <param name="exceptionMessage">exception message</param>
+        /// <returns></returns>
         private string ExceptionAssertFailMessage(string exceptionName, string exceptionMessage)
         {
             return $"Test Failed Because Of {exceptionName}\nWith Message: {exceptionMessage}";
